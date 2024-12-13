@@ -1,8 +1,8 @@
 """
 This script is used to populate the database with random data. It creates users,
-friendships between them and populates their watchlists and favourite people lists 
-with random movies, tv shows and people. It also adds some of them to the 
-finished lists with a rating and a review. It uses the Faker library to generate 
+friendships between them and populates their watchlists and favourite people lists
+with random movies, tv shows and people. It also adds some of them to the
+finished lists with a rating and a review. It uses the Faker library to generate
 random data, and logs the operations to a file.
 """
 
@@ -385,5 +385,6 @@ def wait_for_backend():
 
 
 if __name__ == "__main__":
-    wait_for_backend()
-    populate_database()
+    #wait_for_backend()
+    #populate_database()
+    pass

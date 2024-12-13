@@ -9,12 +9,13 @@ github link: https://github.com/TecuceanuGabriel/iap4-movie-db
 
 The project is a Svelte-Flask web application that allows users to:
 
-- discover information about movie, tv shows and people that work in the industry
-- add items to lists
-- search for movies, tv shows and people
-- create friendship realtionships with other users.
-- view friends profiles
-- view a live feed which contains the latests activities of the user's friends
+- Search for and discover information about movies, TV shows, and people of
+  the industry.
+- Add movies and shows to their watchlists, or mark them as finished along
+  with a rating and a review. Favourite actors can also be followed.
+- Create friendships with other users.
+- View the profiles of friends.
+- View a live feed which contains the latests activities of the user's friends
 
 # Usage
 
@@ -44,7 +45,7 @@ WARNING!!!: The server drops the database every time it starts.
 - Faker: generating fake data to populate the database
 - APScheduler: scheduling tasks (script that cleans the database)
 - JWT: authorization
-- TMDB (external api): getting movie and tv show data
+- TMDB (external API): for information about the cinema industry
 - MongoDB: the database
 - Docker and docker-compose: containerization, and as a development environment
 - Redis: caching requests to the TMDB api
@@ -53,7 +54,10 @@ WARNING!!!: The server drops the database every time it starts.
 
 - Constantin Darius-Andrei:
   - frontend:
-    - completeaza aici
+    - dynamic routing for individual movies, shows, and people
+    - authentifcation interface and other various components, such as the Titled Carousel
+    - profile pages for users
+    - added confetti when following an actor!
   - backend:
     - routes that handle adding, removing and getting lists (movie/tv watchlist,
       favorite people watchlist)

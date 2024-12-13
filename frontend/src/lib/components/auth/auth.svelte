@@ -16,6 +16,7 @@
     let password = $state("");
     let confirmPassword = $state("");
     let isLoading = $state(false);
+    let error = $state("");
 
     function reset() {
         email = "";
@@ -49,8 +50,10 @@
             });
 
             if (!response.ok) {
+                const errorData = await response.json();
+                error = errorData.error;
                 throw new Error(
-                    `Could not ${authState == false ? "sign up" : "log in"}.`,
+                    `Could not ${authState ? "sign up" : "log in"}.`,
                 );
             }
 
@@ -66,7 +69,7 @@
                 });
                 if (!response.ok) {
                     throw new Error(
-                        `Could not ${authState == false ? "sign up" : "log in"}.`,
+                        `Could not ${authState ? "sign up" : "log in"}.`,
                     );
                 }
 
@@ -92,6 +95,7 @@
     }
 
     export function close() {
+        error = "";
         reset();
         document.removeEventListener("click", clickOutside);
         cancel();
@@ -247,6 +251,12 @@
                 {#if confirmPassword !== "" && password != "" && confirmPassword !== password}
                     <p class="text-red-500" style="font-weight = 400;">
                         Passwords do not match!
+                    </p>
+                {/if}
+
+                {#if error !== null && error !== ""}
+                    <p class="text-red-500" style="font-weight = 400;">
+                        Error: {error}
                     </p>
                 {/if}
 

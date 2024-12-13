@@ -13,11 +13,10 @@
     import CollapsibleText from "$lib/components/ui/collapsible-text/index";
     import { Showcase } from "$lib/components/ui/showcase/index";
     import { Stars } from "$lib/components/ui/star-rating/index";
-    import Cookies from "js-cookie";
     import { ClickableStar } from "$lib/components/ui/clickable-star/index";
-    import Input from "$lib/components/ui/input/input.svelte";
     import { Button, buttonVariants } from "$lib/components/ui/button/index";
     import { Textarea } from "$lib/components/ui/textarea";
+    import Cookies from "js-cookie";
 
     let isLoggedIn = $state(false);
     const token = Cookies.get("token");
@@ -91,12 +90,11 @@
             );
             if (!response.ok) {
                 throw new Error(
-                    `Could not get movie details: ${response.status}`,
+                    `Could not get movie recommednations: ${response.status}`,
                 );
             }
 
             const data = await response.json();
-
             recs = data.results.map((rec) => {
                 return {
                     ...rec,
@@ -124,7 +122,7 @@
             });
             if (!response.ok) {
                 throw new Error(
-                    `Could not get movie watchlist status: ${response.status}, ${await response.json()}`,
+                    `Could not get movie watchlist status: ${response.status}`,
                 );
             }
             let data = await response.json();
@@ -146,6 +144,7 @@
                 );
             }
             data = await response.json();
+            console.log(data);
             if (data.success == true) {
                 status = mediaStatus.FINISHED;
                 userData.rating = data.movie.rating;

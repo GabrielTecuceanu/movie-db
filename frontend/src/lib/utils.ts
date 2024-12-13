@@ -92,7 +92,7 @@ export async function getMovieGenres() {
 		const data = await response.json();
 		movieGenres = data.genres
 	} catch (e) {
-		console.log(e)
+		console.error(e)
 	}
 
 	return movieGenres;
@@ -114,7 +114,7 @@ export async function getTVGenres() {
 		const data = await response.json();
 		tvGenres = data.genres
 	} catch (e) {
-		console.log(e)
+		console.error(e)
 	}
 
 	return tvGenres;
@@ -161,4 +161,30 @@ export enum mediaStatus {
 	NONE,
 	WATCHLIST,
 	FINISHED,
+}
+
+export enum friendStatus {
+	ME,
+	FRIEND,
+	STRANGER,
+}
+
+export async function fetchUsername(token) {
+	try {
+		let response = await fetch(`${apiKey}/token`, {
+			method: "GET",
+			headers: {
+				"Content-Type": "application/json",
+				Authorization: `Bearer ${token}`,
+			},
+		});
+		if (!response.ok) {
+			throw new Error(`Could not get username: ${response.status}`);
+		}
+
+		const data = await response.json();
+		return data;
+	} catch (e) {
+		console.error(e);
+	}
 }

@@ -87,7 +87,6 @@
                         redirect: `/${credit.media_type}/${credit.id}`,
                     };
                 });
-            console.log(credits);
         } catch (e) {
             console.error(e);
         }
@@ -152,6 +151,7 @@
                 <ClickableStar
                     bind:this={favourite}
                     additional={"Follow"}
+                    additionalTextOnEnable={"Followed"}
                     enable={async () => {
                         try {
                             const response = await fetch(
@@ -166,7 +166,7 @@
                             );
                             if (!response.ok)
                                 throw new Error(
-                                    `Could not add person to favourite: ${response.status} ${response.statusText} => ${data.error}`,
+                                    `Could not add person to favourite: ${response.status}`,
                                 );
                         } catch (e) {
                             console.error(e);
@@ -186,7 +186,7 @@
                             );
                             if (!response.ok)
                                 throw new Error(
-                                    `Could not remove person from favourite: ${response.status} ${response.statusText} => ${data.error}`,
+                                    `Could not remove person from favourite: ${response.status}`,
                                 );
                         } catch (e) {
                             console.error(e);
@@ -203,13 +203,15 @@
             {#if person.deathday !== null}
                 <p class="text-[1em]">Died {person.deathday}</p>
             {/if}
-            <CollapsibleText
-                textContent={person.biography}
-                maxWords={100}
-                readMoreLabel="more"
-                readLessLabel="less"
-                additional="text-[1.3em] max-w-[800px]"
-            />
+            {#if person.biography !== ""}
+                <CollapsibleText
+                    textContent={person.biography}
+                    maxWords={100}
+                    readMoreLabel="more"
+                    readLessLabel="less"
+                    additional="text-[1.3em] max-w-[800px]"
+                />
+            {/if}
         </div>
     </Showcase>
 {/if}

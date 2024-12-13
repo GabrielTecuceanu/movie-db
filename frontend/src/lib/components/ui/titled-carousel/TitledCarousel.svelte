@@ -5,6 +5,8 @@
     import { redirectTo } from "$lib/utils";
     import { onMount } from "svelte";
 
+    let { title = "Carousel Title", data = null, basis = 5 } = $props();
+
     let windowHeight: number;
     let windowWidth: number = $state();
     const updateWindowSize = () => {
@@ -21,8 +23,6 @@
             window.removeEventListener("resize", updateWindowSize);
         };
     });
-
-    let { title = "Title carousel", data = null, basis = 5 } = $props();
 </script>
 
 <div class="relative mt-12 justify-center space-y-3">
@@ -38,7 +38,7 @@
     >
         <Carousel.Content class="-ml-1">
             {#each data as item}
-                <Carousel.Item class="pl-1 basis-1/3 lg:basis-1/{basis}">
+                <Carousel.Item class="pl-1 md:basis-1/3 lg:basis-1/{basis}">
                     {#if item.tooltip !== null && item.redirect !== null}
                         <Tooltip.Root>
                             <Tooltip.Trigger

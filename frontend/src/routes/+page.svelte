@@ -137,63 +137,61 @@
   });
 </script>
 
-{#key mostPopularFilm}
-  <div
-    class="absolute grid top-0 left-0 mb-64 w-full h-fit bg-cover bg-center bg-no-repeat"
-    style="height: {primaryImageSize}rem;
+{#if mostPopularFilm != null}
+  {#key mostPopularFilm}
+    <div
+      class="absolute grid top-0 left-0 w-full h-fit bg-cover bg-center bg-no-repeat"
+      style="height: {primaryImageSize}rem;
          font-family: 'Open Sans';
          background-image: url('{primaryImageUrl}');"
-    transition:fade={{
-      duration: 500,
-      easing: cubicInOut,
-    }}
-  >
-    <div
-      class="absolute w-full bg-easing-b-smooth_fade"
-      style="bottom: 0rem;
-    height: {bottomGradientSoftness * primaryImageSize}rem;"
-    ></div>
-
-    <div
-      class="absolute left-0 top-0 bg-gradient-to-r from-rich_black to-rich_black/0 w-1/3"
-      style="height: {primaryImageSize}rem;"
-    ></div>
-
-    <div
-      class="absolute right-0 top-0 bg-gradient-to-l from-rich_black to-rich_black/0 w-1/3"
-      style="height: {primaryImageSize}rem;"
-    ></div>
-
-    {#if mostPopularFilm != null}
+      transition:fade={{
+        duration: 500,
+        easing: cubicInOut,
+      }}
+    >
       <div
-        class="absolute left-[15vw] full drop-shadow-lg w-fit flex flex-col bottom-0 pb-[5vh]"
-      >
-        <a
-          class="relative
-          text-xl sm:text-2xl md:text-4xl lg:text-6xl"
-          style="font-weight: 700;
-    margin-top: {45}vh;"
-          href="/movie/{mostPopularFilm.id}"
-          target="_blank"
-        >
-          {mostPopularFilm.original_title}
-        </a>
-        <p
-          class="relative text-ellipsis overflow-hidden line-clamp-4 text-justify
-          w-[250px] sm:w-[400px] md:w-[475px] lg:w-[600px]
-          text-sm sm:text-base md:text-lg lg:text-xl
-          mt-[0.2vh] sm:mt-[0.5vh] md:mt-[1vh] lg:mt-[1.5vh"
-          style="font-weight: 400;
-    height: content-fit;"
-        >
-          {mostPopularFilm.overview}
-        </p>
-      </div>
-    {/if}
-  </div>
-{/key}
+        class="absolute w-full bg-easing-b-smooth_fade"
+        style="bottom: 0rem;
+    height: {bottomGradientSoftness * primaryImageSize}rem;"
+      ></div>
 
-<div class="relative flex flex-col mx-[15vw] mt-[75vh]">
+      <div
+        class="absolute left-0 top-0 bg-gradient-to-r from-rich_black to-rich_black/0 w-1/3"
+        style="height: {primaryImageSize}rem;"
+      ></div>
+
+      <div
+        class="absolute right-0 top-0 bg-gradient-to-l from-rich_black to-rich_black/0 w-1/3"
+        style="height: {primaryImageSize}rem;"
+      ></div>
+    </div>
+  {/key}
+
+  <div
+    class="relative left-[15vw] drop-shadow-lg w-1/3 flex flex-col bottom-0"
+    style="height: 45rem;"
+  >
+    <a
+      class=" text-xl sm:text-2xl md:text-4xl lg:text-6xl"
+      style="font-weight: 700;
+                 margin-top: {45}vh;"
+      href="/movie/{mostPopularFilm.id}"
+      target="_blank"
+    >
+      {mostPopularFilm.original_title}
+    </a>
+    <p
+      class="relative text-ellipsis line-clamp-4 text-justify
+          w-fit mt-2
+          text-sm sm:text-base md:text-lg lg:text-xl"
+      style="font-weight: 400;"
+    >
+      {mostPopularFilm.overview}
+    </p>
+  </div>
+{/if}
+
+<div class="relative flex flex-col mx-[15vw]">
   {#if films !== null && films.length > 0}
     <h1
       class="w-fit h-fit mb-3 sm:text-xl md:text-2xl lg:text-4xl"

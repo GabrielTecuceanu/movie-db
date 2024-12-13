@@ -233,6 +233,9 @@ def is_on_watchlist(movie_id):
 
     watchlist = user.get("movie_watchlist", [])
 
+    if movie_id in watchlist:
+        return jsonify({"success": True}), 200
+
     return jsonify({"success": False}), 200
 
 
@@ -286,7 +289,7 @@ def is_finished(movie_id):
     finished = user.get("movie_finished", [])
 
     for movie in finished:
-        if movie.get("movie_id") is movie_id:
+        if movie.get("movie_id") == movie_id:
             return jsonify({"success": True, "movie": movie}), 200
 
     return jsonify({"success": False}), 200
@@ -489,6 +492,35 @@ def get_tv_watchlist():
     return jsonify(watchlist), 200
 
 
+@lists.route("/watchlist/tv/<int:show_id>", methods=["GET"])
+def is_tv_on_watchlist(show_id):
+    token = request.headers.get("Authorization")
+
+    if not token:
+        return jsonify({"error": "Token is required"}), 400
+
+    token = token.split(" ")[1]
+
+    payload, error = verify_token(token)
+
+    if error:
+        return jsonify(error), 400
+
+    email = payload["email"]
+
+    user = mongo.db.users.find_one({"email": email})
+
+    if not user:
+        return jsonify({"error": "User not found"}), 404
+
+    watchlist = user.get("tv_watchlist", [])
+
+    if show_id in watchlist:
+        return jsonify({"success": True}), 200
+
+    return jsonify({"success": False}), 200
+
+
 @lists.route("/finished/tv", methods=["GET"])
 def get_tv_finished():
     token = request.headers.get("Authorization")
@@ -513,6 +545,35 @@ def get_tv_finished():
     finished = user.get("tv_finished", [])
 
     return jsonify(finished), 200
+
+
+@lists.route("/finished/tv/<int:show_id>", methods=["GET"])
+def is_tv_finished(show_id):
+    token = request.headers.get("Authorization")
+
+    if not token:
+        return jsonify({"error": "Token is required"}), 400
+
+    token = token.split(" ")[1]
+
+    payload, error = verify_token(token)
+
+    if error:
+        return jsonify(error), 400
+
+    email = payload["email"]
+
+    user = mongo.db.users.find_one({"email": email})
+
+    if not user:
+        return jsonify({"error": "User not found"}), 404
+
+    finished = user.get("tv_finished", [])
+    for show in finished:
+        if show.get("show_id") == show_id:
+            return jsonify({"success": True, "show": show}), 200
+
+    return jsonify({"success": False}), 200
 
 
 @lists.route("/favourite/people/add/<int:person_id>", methods=["POST"])
@@ -684,14 +745,11 @@ def change_movie_rating(movie_id, score):
     if not movie_entry:
         return jsonify({"error": "Movie not found in finished list"}), 404
 
-    # Validate the score is between 0 and 5
     if not (0 <= score <= 10):
         return jsonify({"error": "Rating score must be between 0 and 10"}), 400
 
-    # Update the rating for the movie
     movie_entry["rating"] = round(score, 1)
 
-    # Update the user's document in MongoDB
     mongo.db.users.update_one(
         {"email": email},
         {"$set": {"movie_finished": finished}},
@@ -704,7 +762,7 @@ def change_movie_rating(movie_id, score):
 
 
 @lists.route(
-    "/finished/show/<int:show_id>/rate/<float(signed=False):score>",
+    "/finished/tv/<int:show_id>/rate/<float(signed=False):score>",
     methods=["POST"],
 )
 def change_show_rating(show_id, score):
@@ -798,7 +856,7 @@ def change_movie_review(movie_id):
     return jsonify({"message": f"Review updated for movie {movie_id}"}), 200
 
 
-@lists.route("/finished/show/<int:show_id>/review", methods=["POST"])
+@lists.route("/finished/tv/<int:show_id>/review", methods=["POST"])
 def change_tv_review(show_id):
     token = request.headers.get("Authorization")
 
@@ -827,7 +885,6 @@ def change_tv_review(show_id):
 
     finished = user.get("tv_finished", [])
 
-    # Find the show entry by matching the show_id
     show_entry = next(
         (show for show in finished if show.get("show_id") == show_id), None
     )
@@ -835,10 +892,8 @@ def change_tv_review(show_id):
     if not show_entry:
         return jsonify({"error": "Show not found in finished list"}), 404
 
-    # Update the review for the show
     show_entry["review"] = review
 
-    # Update the user's document in MongoDB
     mongo.db.users.update_one(
         {"email": email},
         {"$set": {"tv_finished": finished}},

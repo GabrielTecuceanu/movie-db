@@ -288,9 +288,9 @@ def is_friend():
             ]
         }
     ):
-        return jsonify({"message": "Friendship exists"}), 200
+        return jsonify({"status": True}), 200
 
-    return jsonify({"message": "Friendship does not exist"}), 404
+    return jsonify({"status": False}), 200
 
 
 @friends.route("/friends/get_friend_profile", methods=["POST"])

@@ -4,6 +4,7 @@
 
     let {
         additional = "",
+        additionalTextOnEnable = "",
         enable = async () => {},
         disable = async () => {},
         enabledByDefault = true,
@@ -89,7 +90,11 @@
         background-clip: text;
         -webkit-text-fill-color: transparent;"
     >
-        {additional}
+        {#if isFilled == true && additionalTextOnEnable !== ""}
+            {additionalTextOnEnable}
+        {:else}
+            {additional}
+        {/if}
     </p>
     {#if confetti == true}
         {#each things as thing}

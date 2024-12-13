@@ -1,7 +1,6 @@
-from flask import Blueprint, jsonify
+from flask import Blueprint, jsonify, request
 
 from app.extensions import mongo
-
 
 info = Blueprint("info", __name__)
 
@@ -29,3 +28,12 @@ def get_all_users():
     )
 
     return jsonify(list(users)), 200
+
+@info.route("/get_user/<string:username>", methods=["GET"])
+def get_user(username):
+
+    user = mongo.db.users.find_one({"username": username}, {"_id": 0, "password": 0,})
+    if not user:
+        return jsonify({"error": "Username does not exist"}), 400
+
+    return jsonify(user), 200

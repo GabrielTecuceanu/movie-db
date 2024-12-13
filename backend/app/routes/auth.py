@@ -29,6 +29,8 @@ def register():
 
     if mongo.db.users.find_one({"email": email}):
         return jsonify({"error": "Email already exists"}), 400
+    if mongo.db.users.find_one({"username": username}):
+        return jsonify({"error": "Username already in use"}), 400
 
     hashed_password = generate_password_hash(password)
 
@@ -63,6 +65,7 @@ def login():
 
     email = data.get("email")
     password = data.get("password")
+    print(data)
 
     if not email:
         return jsonify({"error": "Email is required"}), 400

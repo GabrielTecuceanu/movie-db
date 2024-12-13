@@ -15,12 +15,6 @@
     } = $props();
 
     let primaryImageSize = 50;
-    let windowHeight;
-    let windowWidth = $state(0);
-    const updateWindowSize = () => {
-        windowHeight = window.innerHeight;
-        windowWidth = window.innerWidth;
-    };
 </script>
 
 <div
