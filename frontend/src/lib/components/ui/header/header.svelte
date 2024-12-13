@@ -8,7 +8,7 @@
         getTVGenres,
         getCookie,
         topGradientSoftness,
-        fetchUsername,
+        fetchUser,
     } from "$lib/utils";
     import { onMount } from "svelte";
     import { Input } from "$lib/components/ui/input/index.js";
@@ -95,7 +95,7 @@
                         };
                     });
                 } catch (e) {
-                    console.log(e);
+                    console.error(e);
                 }
             } else {
                 searchResult = [];
@@ -141,8 +141,8 @@
 
         if (getCookie("token") !== null) {
             isLoggedIn = true;
-            fetchUsername(token).then((result) => {
-                username = result;
+            fetchUser(token).then((result) => {
+                username = result.username;
             });
         }
 
@@ -303,7 +303,7 @@
                         <DropdownMenu.Item
                             on:click={() => {
                                 redirectTo(`/profile/${username}`);
-                            }}>My Account</DropdownMenu.Item
+                            }}>{username}'s Account</DropdownMenu.Item
                         >
                         <DropdownMenu.Separator />
                         <DropdownMenu.Item

@@ -2,6 +2,7 @@ from flask import Blueprint, request, jsonify
 
 from app.extensions import mongo
 from app.services.auth_service import verify_token
+from app.routes.info import user_by_email
 
 
 protected = Blueprint("protected", __name__)
@@ -28,7 +29,7 @@ def get_profile():
     return jsonify(user), 200
 
 @protected.route("/token", methods=["GET"])
-def username_from_token():
+def user_from_token():
     token = request.headers.get("Authorization")
 
     if not token:
@@ -42,10 +43,4 @@ def username_from_token():
         return jsonify(error), 400
 
     email = payload["email"]
-
-    user = mongo.db.users.find_one({"email": email})
-
-    if not user:
-        return jsonify({"error": "User does not exist"}), 404
-
-    return jsonify(user['username']), 200
+    return user_by_email(email)

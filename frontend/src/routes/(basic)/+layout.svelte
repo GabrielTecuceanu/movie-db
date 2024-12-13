@@ -1,5 +1,5 @@
 <script lang="ts">
-    import "../app.css";
+    import "../../app.css";
     import Header from "$lib/components/ui/header/header.svelte";
     const apiKey = import.meta.env.VITE_API_URL;
 </script>

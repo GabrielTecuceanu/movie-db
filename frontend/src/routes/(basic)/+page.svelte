@@ -85,7 +85,7 @@
         displayFilms = films.slice(0, displayCount);
       })
       .catch((error) => {
-        console.log("Error fetching data:", error.message);
+        console.error("Error fetching data:", error.message);
       });
 
     interval = setInterval(cycleFilm, 8000);
@@ -109,7 +109,7 @@
         displayShows = shows.slice(0, displayCount);
       })
       .catch((error) => {
-        console.log("Error fetching data:", error.message);
+        console.error("Error fetching data:", error.message);
       });
 
     fetch(`${apiKey}/person/popular`)
@@ -128,7 +128,7 @@
         displayPeople = people.slice(0, displayCount);
       })
       .catch((error) => {
-        console.log("Error fetching data:", error.message);
+        console.error("Error fetching data:", error.message);
       });
 
     return () => {

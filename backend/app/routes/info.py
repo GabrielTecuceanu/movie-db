@@ -29,11 +29,20 @@ def get_all_users():
 
     return jsonify(list(users)), 200
 
-@info.route("/get_user/<string:username>", methods=["GET"])
-def get_user(username):
+@info.route("/get_user/username/<string:username>", methods=["GET"])
+def user_by_username(username):
 
     user = mongo.db.users.find_one({"username": username}, {"_id": 0, "password": 0,})
     if not user:
         return jsonify({"error": "Username does not exist"}), 400
+
+    return jsonify(user), 200
+
+@info.route("/get_user/email/<string:email>", methods=["GET"])
+def user_by_email(email):
+
+    user = mongo.db.users.find_one({"email": email}, {"_id": 0, "password": 0,})
+    if not user:
+        return jsonify({"error": "Email is not registered"}), 400
 
     return jsonify(user), 200

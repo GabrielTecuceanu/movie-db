@@ -385,6 +385,6 @@ def wait_for_backend():
 
 
 if __name__ == "__main__":
-    #wait_for_backend()
-    #populate_database()
+    wait_for_backend()
+    populate_database()
     pass

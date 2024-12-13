@@ -30,7 +30,7 @@ def create_app():
     mongo.init_app(app)
 
     # WARNING!!!: DROP DATABASE
-    #drop_database()
+    drop_database()
     # WARNING!!!
 
     scheduler.init_app(app)

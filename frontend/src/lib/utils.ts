@@ -169,7 +169,7 @@ export enum friendStatus {
 	STRANGER,
 }
 
-export async function fetchUsername(token) {
+export async function fetchUser(token) {
 	try {
 		let response = await fetch(`${apiKey}/token`, {
 			method: "GET",

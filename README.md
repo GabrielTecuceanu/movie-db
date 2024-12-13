@@ -112,4 +112,12 @@ makes a change to their lists, a message is added to the live feed.
 
 # Encoutered difficulties
 
-??
+- Darius
+  - Using for the first time a web framework as well as TypeScript proved rather
+    difficult without any prior experience, but once I understood the structure
+    Svelte works with, development quickly sped up. (This, however, means that I
+    was not using TypeScript until I was half done.)
+  - I quickly found out that a frontend-backend split between us was more
+    cumbersome than useful, so I ended up writing backend functions on the fly
+    as they became necessary for the project.
+  - Frontend design and centering divs is hell on earth.

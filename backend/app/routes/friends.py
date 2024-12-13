@@ -103,7 +103,6 @@ def get_pending_friend_requests():
     requests = mongo.db.fd_requests.find(
         {"recipient": email, "status": "pending"}, {"_id": 0}
     )
-
     return jsonify(list(requests)), 200
 
 
