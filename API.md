@@ -1,86 +1,91 @@
 <!-- TOC start (generated with https://github.com/derlin/bitdowntoc) -->
 
 - [API Reference](#api-reference)
-   * [Authentication](#authentication)
-      + [`POST /register`](#post-register)
-      + [`POST /login`](#post-login)
-      + [`POST /delete_account`](#post-delete_account)
-   * [Server Info](#server-info)
-      + [`GET /`](#get-)
-      + [`GET /get_all`](#get-get_all)
-   * [Protected](#protected)
-      + [`GET /profile`](#get-profile)
-   * [TMDB integration](#tmdb-integration)
-   * [Configuration](#configuration)
-      + [`GET /configuration`](#get-configuration)
-      + [`GET /genre/movie/list`](#get-genremovielist)
-      + [`GET /genre/tv/list`](#get-genretvlist)
-   * [Movies](#movies)
-      + [`GET /movie/details/{movie_id}`](#get-moviedetailsmovie_id)
-      + [`GET /movie/popular/{page}`](#get-moviepopularpage)
-      + [`GET /movie/top_rated/{page}`](#get-movietop_ratedpage)
-      + [`GET /movie/upcoming/{page}`](#get-movieupcomingpage)
-      + [`GET /movie/{movie_id}/images`](#get-moviemovie_idimages)
-      + [`GET /movie/{movie_id}/videos`](#get-moviemovie_idvideos)
-      + [`GET /movie/{movie_id}/recommendations`](#get-moviemovie_idrecommendations)
-      + [`GET /movie/{movie_id}/similar`](#get-moviemovie_idsimilar)
-   * [TV Shows](#tv-shows)
-      + [`GET /tv/popular/{page}`](#get-tvpopularpage)
-      + [`GET /tv/top_rated/{page}`](#get-tvtop_ratedpage)
-      + [`GET /tv/details/{show_id}`](#get-tvdetailsshow_id)
-      + [`GET /tv/{show_id}/images`](#get-tvshow_idimages)
-      + [`GET /tv/{show_id}/recommendations`](#get-tvshow_idrecommendations)
-      + [`GET /tv/{show_id}/similar`](#get-tvshow_idsimilar)
-   * [People](#people)
-      + [`GET /person/details/{person_id}`](#get-persondetailsperson_id)
-      + [`GET /person/popular`](#get-personpopular)
-      + [`GET /person/{person_id}/images`](#get-personperson_idimages)
-      + [`GET /person/{person_id}/credits`](#get-personperson_idcredits)
-      + [`GET /person/{person_id}/tagged_images`](#get-personperson_idtagged_images)
-   * [Search](#search)
-      + [`GET /search/multi/{query}/{page}`](#get-searchmultiquerypage)
-      + [`GET /search/movie/{query}/{page}`](#get-searchmoviequerypage)
-      + [`GET /search/tv/{query}/{page}`](#get-searchtvquerypage)
-   * [Lists](#lists)
-      + [`POST /watchlist/movie/add/<int:movie_id>`](#post-watchlistmovieaddintmovie_id)
-      + [`POST /finished/movie/add/<int:movie_id>`](#post-finishedmovieaddintmovie_id)
-      + [`POST /watchlist/movie/remove/<int:movie_id>`](#post-watchlistmovieremoveintmovie_id)
-      + [`POST /finished/movie/remove/<int:movie_id>`](#post-finishedmovieremoveintmovie_id)
-      + [`GET /watchlist/movie`](#get-watchlistmovie)
-      + [`GET /watchlist/movie/<int:movie_id>`](#get-watchlistmovieintmovie_id)
-      + [`GET /finished/movie`](#get-finishedmovie)
-      + [`GET /finished/movie/<int:movie_id>`](#get-finishedmovieintmovie_id)
-      + [`POST /watchlist/tv/add/<int:show_id>`](#post-watchlisttvaddintshow_id)
-      + [`POST /finished/tv/add/<int:show_id>`](#post-finishedtvaddintshow_id)
-      + [`POST /watchlist/tv/remove/<int:show_id>`](#post-watchlisttvremoveintshow_id)
-      + [`POST /finished/tv/remove/<int:show_id>`](#post-finishedtvremoveintshow_id)
-      + [`GET /watchlist/tv`](#get-watchlisttv)
-      + [`GET /finished/tv`](#get-finishedtv)
-      + [`POST /favourite/people/add/<int:person_id>`](#post-favouritepeopleaddintperson_id)
-      + [`POST /favourite/people/remove/<int:person_id>`](#post-favouritepeopleremoveintperson_id)
-      + [`GET /favourite/people`](#get-favouritepeople)
-      + [`GET /favourite/people/<int:person_id>`](#get-favouritepeopleintperson_id)
-      + [`POST /finished/movie/<int:movie_id>/rate/<float(signed=False):score>`](#post-finishedmovieintmovie_idratefloatsignedfalsescore)
-      + [`POST /finished/show/<int:show_id>/rate/<float(signed=False):score>`](#post-finishedshowintshow_idratefloatsignedfalsescore)
-      + [`POST /finished/movie/<int:movie_id>/review`](#post-finishedmovieintmovie_idreview)
-   * [Friends](#friends)
-      + [`POST /friends/request`](#post-friendsrequest)
-      + [`GET /friends/get_pending_requests`](#get-friendsget_pending_requests)
-      + [`POST /friends/respond`](#post-friendsrespond)
-      + [`GET /friends/get_friends`](#get-friendsget_friends)
-      + [`POST /friends/remove`](#post-friendsremove)
-      + [`POST /friends/is_friend`](#post-friendsis_friend)
-      + [`POST /friends/get_friend_profile`](#post-friendsget_friend_profile)
+  - [Authentication](#authentication)
+    - [`POST /register`](#post-register)
+    - [`POST /login`](#post-login)
+    - [`POST /delete_account`](#post-delete_account)
+  - [Server Info](#server-info)
+    - [`GET /`](#get-)
+    - [`GET /get_all`](#get-get_all)
+    - [`GET /get_user/username/<string:username>`](#get-get_userusernamestringusername)
+    - [`GET /get_user/email/<string:email>`](#get-get_useremailstringemail)
+  - [Protected](#protected)
+    - [`GET /profile`](#get-profile)
+  - [TMDB integration](#tmdb-integration)
+  - [Configuration](#configuration)
+    - [`GET /configuration`](#get-configuration)
+    - [`GET /genre/movie/list`](#get-genremovielist)
+    - [`GET /genre/tv/list`](#get-genretvlist)
+  - [Movies](#movies)
+    - [`GET /movie/details/{movie_id}`](#get-moviedetailsmovie_id)
+    - [`GET /movie/popular/{page}`](#get-moviepopularpage)
+    - [`GET /movie/top_rated/{page}`](#get-movietop_ratedpage)
+    - [`GET /movie/upcoming/{page}`](#get-movieupcomingpage)
+    - [`GET /movie/{movie_id}/images`](#get-moviemovie_idimages)
+    - [`GET /movie/{movie_id}/videos`](#get-moviemovie_idvideos)
+    - [`GET /movie/{movie_id}/recommendations`](#get-moviemovie_idrecommendations)
+    - [`GET /movie/{movie_id}/similar`](#get-moviemovie_idsimilar)
+  - [TV Shows](#tv-shows)
+    - [`GET /tv/popular/{page}`](#get-tvpopularpage)
+    - [`GET /tv/top_rated/{page}`](#get-tvtop_ratedpage)
+    - [`GET /tv/details/{show_id}`](#get-tvdetailsshow_id)
+    - [`GET /tv/{show_id}/images`](#get-tvshow_idimages)
+    - [`GET /tv/{show_id}/recommendations`](#get-tvshow_idrecommendations)
+    - [`GET /tv/{show_id}/similar`](#get-tvshow_idsimilar)
+  - [People](#people)
+    - [`GET /person/details/{person_id}`](#get-persondetailsperson_id)
+    - [`GET /person/popular`](#get-personpopular)
+    - [`GET /person/{person_id}/images`](#get-personperson_idimages)
+    - [`GET /person/{person_id}/credits`](#get-personperson_idcredits)
+    - [`GET /person/{person_id}/tagged_images`](#get-personperson_idtagged_images)
+  - [Search](#search)
+    - [`GET /search/multi/{query}/{page}`](#get-searchmultiquerypage)
+    - [`GET /search/movie/{query}/{page}`](#get-searchmoviequerypage)
+    - [`GET /search/tv/{query}/{page}`](#get-searchtvquerypage)
+  - [Lists](#lists)
+    - [`POST /watchlist/movie/add/<int:movie_id>`](#post-watchlistmovieaddintmovie_id)
+    - [`POST /finished/movie/add/<int:movie_id>`](#post-finishedmovieaddintmovie_id)
+    - [`POST /watchlist/movie/remove/<int:movie_id>`](#post-watchlistmovieremoveintmovie_id)
+    - [`POST /finished/movie/remove/<int:movie_id>`](#post-finishedmovieremoveintmovie_id)
+    - [`GET /watchlist/movie`](#get-watchlistmovie)
+    - [`GET /watchlist/movie/<int:movie_id>`](#get-watchlistmovieintmovie_id)
+    - [`GET /finished/movie`](#get-finishedmovie)
+    - [`GET /finished/movie/<int:movie_id>`](#get-finishedmovieintmovie_id)
+    - [`POST /watchlist/tv/add/<int:show_id>`](#post-watchlisttvaddintshow_id)
+    - [`POST /finished/tv/add/<int:show_id>`](#post-finishedtvaddintshow_id)
+    - [`POST /watchlist/tv/remove/<int:show_id>`](#post-watchlisttvremoveintshow_id)
+    - [`POST /finished/tv/remove/<int:show_id>`](#post-finishedtvremoveintshow_id)
+    - [`GET /watchlist/tv`](#get-watchlisttv)
+    - [`GET /finished/tv`](#get-finishedtv)
+    - [`POST /favourite/people/add/<int:person_id>`](#post-favouritepeopleaddintperson_id)
+    - [`POST /favourite/people/remove/<int:person_id>`](#post-favouritepeopleremoveintperson_id)
+    - [`GET /favourite/people`](#get-favouritepeople)
+    - [`GET /favourite/people/<int:person_id>`](#get-favouritepeopleintperson_id)
+    - [`POST /finished/movie/<int:movie_id>/rate/<float(signed=False):score>`](#post-finishedmovieintmovie_idratefloatsignedfalsescore)
+    - [`POST /finished/show/<int:show_id>/rate/<float(signed=False):score>`](#post-finishedshowintshow_idratefloatsignedfalsescore)
+    - [`POST /finished/movie/<int:movie_id>/review`](#post-finishedmovieintmovie_idreview)
+  - [Friends](#friends)
+    - [`POST /friends/request`](#post-friendsrequest)
+    - [`GET /friends/get_pending_requests`](#get-friendsget_pending_requests)
+    - [`POST /friends/respond`](#post-friendsrespond)
+    - [`GET /friends/get_friends`](#get-friendsget_friends)
+    - [`POST /friends/remove`](#post-friendsremove)
+    - [`POST /friends/is_friend`](#post-friendsis_friend)
+    - [`POST /friends/get_friend_profile`](#post-friendsget_friend_profile)
 
 <!-- TOC end -->
 
 <!-- TOC --><a name="api-reference"></a>
+
 # API Reference
 
 <!-- TOC --><a name="authentication"></a>
+
 ## Authentication
 
 <!-- TOC --><a name="post-register"></a>
+
 ### `POST /register`
 
 **Description:** Registers a new user.
@@ -138,6 +143,7 @@
 ---
 
 <!-- TOC --><a name="post-login"></a>
+
 ### `POST /login`
 
 **Description:** Logs in an existing user.
@@ -193,6 +199,7 @@
 ---
 
 <!-- TOC --><a name="post-delete_account"></a>
+
 ### `POST /delete_account`
 
 **Description:** Deletes an existing user account.
@@ -239,9 +246,11 @@
   ```
 
 <!-- TOC --><a name="server-info"></a>
+
 ## Server Info
 
 <!-- TOC --><a name="get-"></a>
+
 ### `GET /`
 
 **Description:** Checks if the server is online.
@@ -258,6 +267,7 @@
 ---
 
 <!-- TOC --><a name="get-get_all"></a>
+
 ### `GET /get_all`
 
 **Description:** Retrieves a list of all users without sensitive information.
@@ -274,10 +284,76 @@
   ]
   ```
 
+<!-- TOC --><a name="get-get_userusernamestringusername"></a>
+
+### `GET /get_user/username/<string:username>`
+
+**Description:** Retrieves a user's information.
+
+**Response:**
+
+- **200 OK:**
+  ```json
+  {
+    "username": "exampleuser",
+    "email": "email@bla.com",
+    "movie_watchlist": [],
+    "tv_watchlist": [],
+    "movie_finished": [],
+    "tv_finished": [],
+    "favourite_people": [],
+    "feed": []
+  }
+  ```
+
+**Possible Errors:**
+
+- **400 Bad Request:**
+  ```json
+  {
+    "error": "Username does not exist"
+  }
+  ```
+
+---
+
+<!-- TOC --><a name="get-get_useremailstringemail"></a>
+
+## `GET /get_user/email/<string:email>`
+
+**Description:** Retrieves a user's information.
+
+**Response:**
+
+- **200 OK:**
+  ```json
+  {
+    "username": "exampleuser",
+    "email": "email@bla.com",
+    "movie_watchlist": [],
+    "tv_watchlist": [],
+    "movie_finished": [],
+    "tv_finished": [],
+    "favourite_people": [],
+    "feed": []
+  }
+  ```
+
+**Possible Errors:**
+
+- **400 Bad Request:**
+  ```json
+  {
+    "error": "Email is not registered"
+  }
+  ```
+
 <!-- TOC --><a name="protected"></a>
+
 ## Protected
 
 <!-- TOC --><a name="get-profile"></a>
+
 ### `GET /profile`
 
 **Description:** Retrieves the profile information of the authenticated user.
@@ -312,12 +388,15 @@
   ```
 
 <!-- TOC --><a name="tmdb-integration"></a>
+
 ## TMDB integration
 
 <!-- TOC --><a name="configuration"></a>
+
 ## Configuration
 
 <!-- TOC --><a name="get-configuration"></a>
+
 ### `GET /configuration`
 
 **Description:** Retrieves TMDB API configuration information.
@@ -333,6 +412,7 @@
 ---
 
 <!-- TOC --><a name="get-genremovielist"></a>
+
 ### `GET /genre/movie/list`
 
 **Description:** Retrieves a list of all movie genres.
@@ -354,6 +434,7 @@
 ---
 
 <!-- TOC --><a name="get-genretvlist"></a>
+
 ### `GET /genre/tv/list`
 
 **Description:** Retrieves a list of all TV show genres.
@@ -373,9 +454,11 @@
   ```
 
 <!-- TOC --><a name="movies"></a>
+
 ## Movies
 
 <!-- TOC --><a name="get-moviedetailsmovie_id"></a>
+
 ### `GET /movie/details/{movie_id}`
 
 **Description:** Retrieves detailed information about a specific movie.
@@ -383,9 +466,10 @@
 
 - `movie_id` (integer): The ID of the movie.
 
---- 
+---
 
 <!-- TOC --><a name="get-moviepopularpage"></a>
+
 ### `GET /movie/popular/{page}`
 
 **Description:** Retrieves a list of popular movies with runtime information.
@@ -396,6 +480,7 @@
 ---
 
 <!-- TOC --><a name="get-movietop_ratedpage"></a>
+
 ### `GET /movie/top_rated/{page}`
 
 **Description:** Retrieves a list of top-rated movies.
@@ -406,6 +491,7 @@
 ---
 
 <!-- TOC --><a name="get-movieupcomingpage"></a>
+
 ### `GET /movie/upcoming/{page}`
 
 **Description:** Retrieves a list of upcoming movies.
@@ -416,6 +502,7 @@
 ---
 
 <!-- TOC --><a name="get-moviemovie_idimages"></a>
+
 ### `GET /movie/{movie_id}/images`
 
 **Description:** Retrieves images associated with a specific movie.
@@ -426,6 +513,7 @@
 ---
 
 <!-- TOC --><a name="get-moviemovie_idvideos"></a>
+
 ### `GET /movie/{movie_id}/videos`
 
 **Description:** Retrieves videos associated with a specific movie.
@@ -436,6 +524,7 @@
 ---
 
 <!-- TOC --><a name="get-moviemovie_idrecommendations"></a>
+
 ### `GET /movie/{movie_id}/recommendations`
 
 **Description:** Retrieves movie recommendations based on a specific movie.
@@ -446,6 +535,7 @@
 ---
 
 <!-- TOC --><a name="get-moviemovie_idsimilar"></a>
+
 ### `GET /movie/{movie_id}/similar`
 
 **Description:** Retrieves movies similar to a specific movie.
@@ -454,9 +544,11 @@
 - `movie_id` (integer): The ID of the movie.
 
 <!-- TOC --><a name="tv-shows"></a>
+
 ## TV Shows
 
 <!-- TOC --><a name="get-tvpopularpage"></a>
+
 ### `GET /tv/popular/{page}`
 
 **Description:** Retrieves a list of popular TV shows.
@@ -467,6 +559,7 @@
 ---
 
 <!-- TOC --><a name="get-tvtop_ratedpage"></a>
+
 ### `GET /tv/top_rated/{page}`
 
 **Description:** Retrieves a list of top-rated TV shows.
@@ -477,6 +570,7 @@
 ---
 
 <!-- TOC --><a name="get-tvdetailsshow_id"></a>
+
 ### `GET /tv/details/{show_id}`
 
 **Description:** Retrieves detailed information about a specific TV show.
@@ -487,6 +581,7 @@
 ---
 
 <!-- TOC --><a name="get-tvshow_idimages"></a>
+
 ### `GET /tv/{show_id}/images`
 
 **Description:** Retrieves images associated with a specific TV show.
@@ -497,6 +592,7 @@
 ---
 
 <!-- TOC --><a name="get-tvshow_idrecommendations"></a>
+
 ### `GET /tv/{show_id}/recommendations`
 
 **Description:** Retrieves TV show recommendations based on a specific show.
@@ -507,6 +603,7 @@
 ---
 
 <!-- TOC --><a name="get-tvshow_idsimilar"></a>
+
 ### `GET /tv/{show_id}/similar`
 
 **Description:** Retrieves TV shows similar to a specific show.
@@ -515,9 +612,11 @@
 - `show_id` (integer): The ID of the TV show.
 
 <!-- TOC --><a name="people"></a>
+
 ## People
 
 <!-- TOC --><a name="get-persondetailsperson_id"></a>
+
 ### `GET /person/details/{person_id}`
 
 **Description:** Retrieves detailed information about a specific person.
@@ -528,6 +627,7 @@
 ---
 
 <!-- TOC --><a name="get-personpopular"></a>
+
 ### `GET /person/popular`
 
 **Description:** Retrieves a list of popular people.
@@ -535,6 +635,7 @@
 ---
 
 <!-- TOC --><a name="get-personperson_idimages"></a>
+
 ### `GET /person/{person_id}/images`
 
 **Description:** Retrieves images of a specific person.
@@ -545,6 +646,7 @@
 ---
 
 <!-- TOC --><a name="get-personperson_idcredits"></a>
+
 ### `GET /person/{person_id}/credits`
 
 **Description:** Retrieves combined credits for a specific person.
@@ -555,6 +657,7 @@
 ---
 
 <!-- TOC --><a name="get-personperson_idtagged_images"></a>
+
 ### `GET /person/{person_id}/tagged_images`
 
 **Description:** Retrieves images where a specific person is tagged.
@@ -563,9 +666,11 @@
 - `person_id` (integer): The ID of the person.
 
 <!-- TOC --><a name="search"></a>
+
 ## Search
 
 <!-- TOC --><a name="get-searchmultiquerypage"></a>
+
 ### `GET /search/multi/{query}/{page}`
 
 **Description:** Searches across movies, TV shows, and people.
@@ -577,6 +682,7 @@
 ---
 
 <!-- TOC --><a name="get-searchmoviequerypage"></a>
+
 ### `GET /search/movie/{query}/{page}`
 
 **Description:** Searches for movies with optional genre filtering.
@@ -589,6 +695,7 @@
 ---
 
 <!-- TOC --><a name="get-searchtvquerypage"></a>
+
 ### `GET /search/tv/{query}/{page}`
 
 **Description:** Searches for TV shows with optional genre filtering.
@@ -599,9 +706,11 @@
 - `genres` (string, optional): Comma-separated list of genre IDs.
 
 <!-- TOC --><a name="lists"></a>
+
 ## Lists
 
 <!-- TOC --><a name="post-watchlistmovieaddintmovie_id"></a>
+
 ### `POST /watchlist/movie/add/<int:movie_id>`
 
 **Description:** Adds a movie to the user's watchlist.
@@ -648,6 +757,7 @@
 ---
 
 <!-- TOC --><a name="post-finishedmovieaddintmovie_id"></a>
+
 ### `POST /finished/movie/add/<int:movie_id>`
 
 **Description:** Adds a movie to the user's finished list.
@@ -694,6 +804,7 @@
 ---
 
 <!-- TOC --><a name="post-watchlistmovieremoveintmovie_id"></a>
+
 ### `POST /watchlist/movie/remove/<int:movie_id>`
 
 **Description:** Removes a movie from the user's watchlist.
@@ -740,6 +851,7 @@
 ---
 
 <!-- TOC --><a name="post-finishedmovieremoveintmovie_id"></a>
+
 ### `POST /finished/movie/remove/<int:movie_id>`
 
 **Description:** Removes a movie from the user's finished list.
@@ -786,6 +898,7 @@
 ---
 
 <!-- TOC --><a name="get-watchlistmovie"></a>
+
 ### `GET /watchlist/movie`
 
 **Description:** Retrieves the user's movie watchlist.
@@ -827,6 +940,7 @@
 ---
 
 <!-- TOC --><a name="get-watchlistmovieintmovie_id"></a>
+
 ### `GET /watchlist/movie/<int:movie_id>`
 
 **Description:** Checks if a movie is in the user's watchlist.
@@ -868,6 +982,7 @@
 ---
 
 <!-- TOC --><a name="get-finishedmovie"></a>
+
 ### `GET /finished/movie`
 
 **Description:** Retrieves the user's finished movies list.
@@ -917,6 +1032,7 @@
 ---
 
 <!-- TOC --><a name="get-finishedmovieintmovie_id"></a>
+
 ### `GET /finished/movie/<int:movie_id>`
 
 **Description:** Checks if a movie is in the user's finished list.
@@ -963,6 +1079,7 @@
 ---
 
 <!-- TOC --><a name="post-watchlisttvaddintshow_id"></a>
+
 ### `POST /watchlist/tv/add/<int:show_id>`
 
 **Description:** Adds a TV show to the user's watchlist.
@@ -1009,6 +1126,7 @@
 ---
 
 <!-- TOC --><a name="post-finishedtvaddintshow_id"></a>
+
 ### `POST /finished/tv/add/<int:show_id>`
 
 **Description:** Adds a TV show to the user's finished list.
@@ -1053,6 +1171,7 @@
   ```
 
 <!-- TOC --><a name="post-watchlisttvremoveintshow_id"></a>
+
 ### `POST /watchlist/tv/remove/<int:show_id>`
 
 **Description:** Removes a TV show from the user's watchlist.
@@ -1099,6 +1218,7 @@
 ---
 
 <!-- TOC --><a name="post-finishedtvremoveintshow_id"></a>
+
 ### `POST /finished/tv/remove/<int:show_id>`
 
 **Description:** Removes a TV show from the user's finished list.
@@ -1145,6 +1265,7 @@
 ---
 
 <!-- TOC --><a name="get-watchlisttv"></a>
+
 ### `GET /watchlist/tv`
 
 **Description:** Retrieves the user's TV watchlist.
@@ -1186,6 +1307,7 @@
 ---
 
 <!-- TOC --><a name="get-finishedtv"></a>
+
 ### `GET /finished/tv`
 
 **Description:** Retrieves the user's finished TV shows list.
@@ -1235,6 +1357,7 @@
 ---
 
 <!-- TOC --><a name="post-favouritepeopleaddintperson_id"></a>
+
 ### `POST /favourite/people/add/<int:person_id>`
 
 **Description:** Adds a person to the user's favourite list.
@@ -1281,6 +1404,7 @@
 ---
 
 <!-- TOC --><a name="post-favouritepeopleremoveintperson_id"></a>
+
 ### `POST /favourite/people/remove/<int:person_id>`
 
 **Description:** Removes a person from the user's favourite list.
@@ -1327,6 +1451,7 @@
 ---
 
 <!-- TOC --><a name="get-favouritepeople"></a>
+
 ### `GET /favourite/people`
 
 **Description:** Retrieves the user's favourite people list.
@@ -1368,6 +1493,7 @@
 ---
 
 <!-- TOC --><a name="get-favouritepeopleintperson_id"></a>
+
 ### `GET /favourite/people/<int:person_id>`
 
 **Description:** Checks if a person is in the user's favourite list.
@@ -1414,6 +1540,7 @@
 ---
 
 <!-- TOC --><a name="post-finishedmovieintmovie_idratefloatsignedfalsescore"></a>
+
 ### `POST /finished/movie/<int:movie_id>/rate/<float(signed=False):score>`
 
 **Description:** Changes the rating of a finished movie.
@@ -1466,6 +1593,7 @@
 ---
 
 <!-- TOC --><a name="post-finishedshowintshow_idratefloatsignedfalsescore"></a>
+
 ### `POST /finished/show/<int:show_id>/rate/<float(signed=False):score>`
 
 **Description:** Changes the rating of a finished TV show.
@@ -1518,6 +1646,7 @@
 ---
 
 <!-- TOC --><a name="post-finishedmovieintmovie_idreview"></a>
+
 ### `POST /finished/movie/<int:movie_id>/review`
 
 **Description:** Changes the review of a finished movie.
@@ -1560,11 +1689,12 @@
     "error": "Review is required"
   }
   ```
+  <!-- TOC --><a name="friends"></a>
 
-<!-- TOC --><a name="friends"></a>
 ## Friends
 
 <!-- TOC --><a name="post-friendsrequest"></a>
+
 ### `POST /friends/request`
 
 **Description:** Sends a friend request to the specified email address.
@@ -1632,6 +1762,7 @@
 ---
 
 <!-- TOC --><a name="get-friendsget_pending_requests"></a>
+
 ### `GET /friends/get_pending_requests`
 
 **Description:** Retrieves all pending friend requests for the authenticated user.
@@ -1671,6 +1802,7 @@
 ---
 
 <!-- TOC --><a name="post-friendsrespond"></a>
+
 ### `POST /friends/respond`
 
 **Description:** Responds to a friend request.
@@ -1735,6 +1867,7 @@
 ---
 
 <!-- TOC --><a name="get-friendsget_friends"></a>
+
 ### `GET /friends/get_friends`
 
 **Description:** Retrieves the list of friends for the authenticated user.
@@ -1773,6 +1906,7 @@
 ---
 
 <!-- TOC --><a name="post-friendsremove"></a>
+
 ### `POST /friends/remove`
 
 **Description:** Removes a friend from the user's friend list.
@@ -1825,6 +1959,7 @@
 ---
 
 <!-- TOC --><a name="post-friendsis_friend"></a>
+
 ### `POST /friends/is_friend`
 
 **Description:** Checks if a user is friends with another user.
@@ -1876,6 +2011,7 @@
 ---
 
 <!-- TOC --><a name="post-friendsget_friend_profile"></a>
+
 ### `POST /friends/get_friend_profile`
 
 **Description:** Retrieves the profile of a friend.
