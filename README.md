@@ -1,126 +1,82 @@
-# Team members:
+<div align="center">
 
-- Constantin Darius-Andrei 321CA
-- Tecuceanu Gabriel-Cristian 321CA
+# MovieDB
 
-# Introduction
+</div>
 
-The project is a Svelte-Flask web application that allows users to:
+A full-stack movie and TV show discovery platform with social features. Browse films, track what you've watched, rate and review content, and see what your friends are into.
 
-- Search for and discover information about movies, TV shows, and people in the 
-industry.
-- Add movies and shows to their watchlists, or mark them as finished along with 
-a rating and a review. Favourite actors can also be followed.
-- Create friendships with other users.
-- View the profiles of friends.
-- View a live feed which contains the latest activities of the user's friends
+Built with **SvelteKit**, **Flask**, **MongoDB**, and **Redis**, powered by the [TMDB API](https://www.themoviedb.org/documentation/api).
 
-# Usage
+## Features
 
-To start the application run:
+- **Discover** - Browse popular, top-rated, and upcoming movies and TV shows. Search across movies, shows, and actors.
+- **Watchlists** - Save movies and shows you want to watch. Mark them as finished with a rating and review.
+- **Favorite People** - Follow actors and creators you like.
+- **Friends & Feed** - Add friends, view their profiles, and see a live feed of their activity (new ratings, reviews, list updates).
+- **User Profiles** - Tab-based profile pages with watchlists, finished content, and favorite people. Accessible at `/profile/<username>`.
+
+## Quick Start
 
 ```bash
 docker compose up
 ```
 
-It will take a while to build and start all the containers, and run the database 
-population script.
+This builds and starts all services (frontend, backend, MongoDB, Redis) and seeds the database with sample data.
 
-To modify the number of users the script will create, modify the `USERS_COUNT` 
-environment variable in the `docker-compose.yml` file.
+> The backend **drops and re-seeds the database on every restart** - this is development-mode behavior.
 
-WARNING!!!: The server drops the database every time it starts.
+### Configuration
 
-## MONGO credentials
+| Variable      | Location             | Description                                 |
+| ------------- | -------------------- | ------------------------------------------- |
+| `USERS_COUNT` | `docker-compose.yml` | Number of fake users to generate on startup |
 
-- username: root
-- password: root
+## Architecture
 
-# Technologies used
+```
+┌─────────────┐     REST API     ┌──────────────┐     ┌───────────┐
+│  SvelteKit  │ ◄──────────────► │    Flask     │ ◄──►│  MongoDB  │
+│  Frontend   │                  │   Backend    │     └───────────┘
+└─────────────┘                  │              │     ┌───────────┐
+                                 │              │ ◄──►│   Redis   │
+                                 │              │     │  (cache)  │
+                                 │              │     └───────────┘
+                                 │              │     ┌───────────┐
+                                 │              │ ◄──►│ TMDB API  │
+                                 └──────────────┘     └───────────┘
+```
 
-- Svelte: the frontend (single page application)
-- Flask: the backend
-- Faker: generating fake data to populate the database
-- APScheduler: scheduling tasks (script that cleans the database)
-- JWT: authorization
-- TMDB (external API): for information about the cinema industry
-- MongoDB: the database
-- Docker and docker-compose: containerization, and as a development environment
-- Redis: caching requests to the TMDB API
+Each service runs in its own Docker container, orchestrated with Docker Compose.
 
-# Members contributions
+- **Frontend** - SvelteKit SPA with TailwindCSS, Bits UI components, and Embla Carousel.
+- **Backend** - Flask with blueprint-based routing, JWT authentication, and APScheduler for background tasks.
+- **MongoDB** - Stores users, friendships, friend requests, and activity feed data.
+- **Redis** - Caches TMDB API responses to reduce external calls and improve latency.
+- **Faker** - A one-shot container that populates the database with realistic test data (users, friendships, watchlists). Credentials are logged to `/logs/faker_log.txt`.
 
-- Constantin Darius-Andrei:
-  - frontend:
-    - dynamic routing for individual movies, shows, and people
-    - authentication interface and other various components, such as the Titled 
-    Carousel
-    - profile pages for users
-    - added confetti when following an actor!
-  - backend:
-    - routes that handle adding, removing, and getting lists (movie/TV watchlist,
-      favorite people watchlist)
-- Tecuceanu Gabriel-Cristian:
-  - backend:
-    - auth system
-    - friend system
-    - live feed
-    - TMDB integration
-    - TMDB requests caching
-    - database cleanup script
-  - containerization
-  - script that populates the database with fake data
+## API
 
-# Architecture
+The backend exposes the following route groups:
 
-Each component of the application lives in its own container:
+| Prefix       | Description                                                            |
+| ------------ | ---------------------------------------------------------------------- |
+| `/auth`      | Registration, login, account deletion                                  |
+| `/protected` | Authenticated user profile and token info                              |
+| `/tmdb`      | Movies, TV shows, people, search, recommendations (proxied from TMDB)  |
+| `/lists`     | Watchlists, finished lists, favorite people — with ratings and reviews |
+| `/friends`   | Friend requests, friend list, friend profiles                          |
+| `/info`      | Health check, user lookup                                              |
 
-- frontend
-- backend
-- mongo
-- redis
-- faker
+Full endpoint documentation is in [`API.md`](API.md).
 
-Docker Compose is used to manage containers and link them together, creating 
-networks and volumes.
+## Tech Stack
 
-The frontend and backend communicate through a REST API.
-
-The frontend is a single page application built using Svelte.
-
-The backend communicates with the TMDB API to get movie and TV show data, 
-acting as an intermediary between the frontend and the TMDB API.
-
-We use Redis to cache requests to the TMDB API.
-
-We use MongoDB to store user data, friendships, and friend requests.
-
-We use Faker to populate the database. The backend drops the database every time 
-the Flask app is run. Faker waits for the backend to be online and then generates 
-users, friendship relationships between the users, and adds movies/TV shows/people 
-to the users' lists. All operations are logged in the `/log/faker_log.txt` file 
-(here you can find the passwords of the generated users).
-
-Friend requests can have 3 states: pending, accepted, rejected. To clear 
-processed requests (accepted or rejected) we have a script that runs every 12 
-hours and deletes requests that are older than 1 day. For this, we use the 
-APScheduler library.
-
-Received friend requests are displayed in the live feed. Also, when a friend 
-makes a change to their lists, a message is added to the live feed.
-
-# Encountered difficulties
-
-- Darius
-  - Using a web framework and TypeScript for the first time proved rather difficult
-  without any prior experience, but once I understood the structure Svelte works 
-  with, development quickly sped up. (This, however, means that I was not using 
-  TypeScript until I was half done.)
-  - I quickly found out that a frontend-backend split between us was more cumbersome 
-  than useful, so I ended up writing backend functions on the fly as they became 
-  necessary for the project.
-  - Frontend design and centering divs is hell on earth.
-- Gabi
-  - Learning how to fit together all the services of the application proved to be 
-  quite challenging (managin containers, the way they interact, figuring out
-  how to only run the database population script once the database is up and running).
+| Layer          | Technology                                             |
+| -------------- | ------------------------------------------------------ |
+| Frontend       | SvelteKit, TailwindCSS, Bits UI, Embla Carousel, Axios |
+| Backend        | Flask, PyJWT, Flask-PyMongo, Flask-APScheduler         |
+| Database       | MongoDB                                                |
+| Cache          | Redis                                                  |
+| External API   | TMDB                                                   |
+| Infrastructure | Docker, Docker Compose                                 |
