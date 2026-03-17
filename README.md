@@ -16,7 +16,22 @@ Built with **SvelteKit**, **Flask**, **MongoDB**, and **Redis**, powered by the 
 - **Friends & Feed** - Add friends, view their profiles, and see a live feed of their activity (new ratings, reviews, list updates).
 - **User Profiles** - Tab-based profile pages with watchlists, finished content, and favorite people. Accessible at `/profile/<username>`.
 
-## Quick Start
+## Development Setup
+
+1. Copy the example env file and fill in your secrets:
+
+```bash
+cp .env.example .env
+```
+
+2. Edit `.env` with your values:
+
+| Variable       | Description                                                                               |
+| -------------- | ----------------------------------------------------------------------------------------- |
+| `JWT_SECRET`   | Secret key used to sign JWT tokens. Use any random string for development.                |
+| `TMDB_API_KEY` | API key from [TMDB](https://www.themoviedb.org/settings/api). Required for movie/TV data. |
+
+3. Start all services:
 
 ```bash
 docker compose up
@@ -28,23 +43,23 @@ This builds and starts all services (frontend, backend, MongoDB, Redis) and seed
 
 ### Configuration
 
-| Variable      | Location             | Description                                 |
-| ------------- | -------------------- | ------------------------------------------- |
-| `USERS_COUNT` | `docker-compose.yml` | Number of fake users to generate on startup |
+| Variable     | Location             | Description                                 |
+| ------------ | -------------------- | ------------------------------------------- |
+| `USER_COUNT` | `docker-compose.yml` | Number of fake users to generate on startup |
 
 ## Architecture
 
 ```
-┌─────────────┐     REST API     ┌──────────────┐     ┌───────────┐
-│  SvelteKit  │ ◄──────────────► │    Flask     │ ◄──►│  MongoDB  │
-│  Frontend   │                  │   Backend    │     └───────────┘
-└─────────────┘                  │              │     ┌───────────┐
-                                 │              │ ◄──►│   Redis   │
-                                 │              │     │  (cache)  │
-                                 │              │     └───────────┘
-                                 │              │     ┌───────────┐
-                                 │              │ ◄──►│ TMDB API  │
-                                 └──────────────┘     └───────────┘
+┌─────────────┐     REST API     ┌──────────────┐      ┌───────────┐
+│  SvelteKit  │ ◄──────────────► │    Flask     │ ◄──► │  MongoDB  │
+│  Frontend   │                  │   Backend    │      └───────────┘
+└─────────────┘                  │              │      ┌───────────┐
+                                 │              │ ◄──► │   Redis   │
+                                 │              │      │  (cache)  │
+                                 │              │      └───────────┘
+                                 │              │      ┌───────────┐
+                                 │              │ ◄──► │ TMDB API  │
+                                 └──────────────┘      └───────────┘
 ```
 
 Each service runs in its own Docker container, orchestrated with Docker Compose.
