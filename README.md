@@ -2,6 +2,8 @@
 
 # MovieDB
 
+![demo](./assets/demo.gif)
+
 </div>
 
 A full-stack movie and TV show discovery platform with social features. Browse films, track what you've watched, rate and review content, and see what your friends are into.
