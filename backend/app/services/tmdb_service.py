@@ -42,8 +42,9 @@ def fetch_tmdb_data(endpoint, params=None):
 
     endpoint.lstrip("/")
     url = f"{Config.TMDB_BASE_URL}/{endpoint}"
-    headers = {"Authorization": f"Bearer {Config.TMDB_API_KEY}"}
+    headers = {}
     params = params or {}
+    params["api_key"] = Config.TMDB_API_KEY
 
     response = requests.get(url, headers=headers, params=params, timeout=10)
 
